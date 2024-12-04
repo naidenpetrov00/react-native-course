@@ -1,15 +1,25 @@
 import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { GoalItem } from "./components/GoalItem/GoalItem";
 
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState("");
+  const [courseGoals, setcourseGoals] = useState([]);
 
   const goalInputHandler = (enteredValue) => {
     setEnteredGoalText(enteredValue);
   };
 
   const addGoalHandler = () => {
-    console.log(enteredGoalText);
+    setcourseGoals((state) => [...state, enteredGoalText]);
   };
 
   return (
@@ -23,7 +33,13 @@ export default function App() {
         <Button title="Add Goal" onPress={addGoalHandler}></Button>
       </View>
       <View style={styles.goalsContainer}>
-        <Text>List of goals...</Text>
+        <FlatList
+          data={courseGoals}
+          renderItem={(itemData) => {
+            return <GoalItem itemData={itemData} />;
+          }}
+          keyExtractor={(index) => index}
+        />
       </View>
     </View>
   );
