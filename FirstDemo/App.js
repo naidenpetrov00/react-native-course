@@ -1,42 +1,36 @@
 import { useState } from "react";
-import {
-  Button,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { GoalItem } from "./components/GoalItem/GoalItem";
+import { GoalInput } from "./components/GoalInput/GoalInput";
 
 export default function App() {
-  const [enteredGoalText, setEnteredGoalText] = useState("");
-  const [courseGoals, setcourseGoals] = useState([]);
+  const [courseGoals, setcourseGoals] = useState([{}]);
 
-  const goalInputHandler = (enteredValue) => {
-    setEnteredGoalText(enteredValue);
+  const addGoalHandler = (enteredGoalText) => {
+    setcourseGoals((state) => [
+      ...state,
+      { text: enteredGoalText, id: Math.random().toString() },
+    ]);
   };
 
-  const addGoalHandler = () => {
-    setcourseGoals((state) => [...state, enteredGoalText]);
+  const deleteGoalHandler = (id) => {
+    setcourseGoals((state) => state.filter((g) => g.id !== id));
   };
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Your course goal!"
-          onChangeText={goalInputHandler}
-        />
-        <Button title="Add Goal" onPress={addGoalHandler}></Button>
-      </View>
+      <GoalInput onAddGoal={addGoalHandler} />
       <View style={styles.goalsContainer}>
         <FlatList
           data={courseGoals}
           renderItem={(itemData) => {
-            return <GoalItem itemData={itemData} />;
+            return (
+              <GoalItem
+                itemData={itemData}
+                onDeleteItem={deleteGoalHandler}
+                id={itemData.item.id}
+              />
+            );
           }}
           keyExtractor={(index) => index}
         />
@@ -50,20 +44,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 50,
     paddingHorizontal: 16,
-  },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 24,
-    borderBottomWidth: 1,
-  },
-
-  textInput: {
-    borderWidth: 1,
-    width: "70%",
-    marginRight: 8,
   },
   goalsContainer: {
     flex: 5,

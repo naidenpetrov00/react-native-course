@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+export const goalItemStyles = StyleSheet.create({
   goalItem: {
     margin: 8,
     padding: 8,

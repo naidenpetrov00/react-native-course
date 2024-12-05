@@ -1,11 +1,13 @@
 import React from "react";
-import { Text } from "react-native";
-import { styles } from "./GoalItem.styles";
+import { Pressable, Text } from "react-native";
+import { goalItemStyles } from "./GoalItem.styles";
 
-export const GoalItem = ({ itemData }) => {
+export const GoalItem = ({ itemData, onDeleteItem, id }) => {
   return (
-    <Text key={itemData.index} style={styles.goalItem}>
-      {itemData.item}
-    </Text>
+    <Pressable onPress={() => onDeleteItem(id)}>
+      <Text key={itemData.index} style={goalItemStyles.goalItem}>
+        {itemData.text}
+      </Text>
+    </Pressable>
   );
 };
