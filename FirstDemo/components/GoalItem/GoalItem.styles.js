@@ -8,4 +8,7 @@ export const goalItemStyles = StyleSheet.create({
     backgroundColor: "#5e0acc",
     color: "#ffff",
   },
+  pressedItem: {
+    opacity: 0.5,
+  },
 });
