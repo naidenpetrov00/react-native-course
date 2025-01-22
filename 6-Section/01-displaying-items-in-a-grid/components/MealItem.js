@@ -1,11 +1,17 @@
+import { useNavigation } from "@react-navigation/native";
 import { Image, Pressable, Text, View, StyleSheet } from "react-native";
 
 export const MealItem = ({ meal }) => {
-  const { title, imageUrl, duration, complexity, affordability } = meal;
+  const { id, title, imageUrl, duration, complexity, affordability } = meal;
+  const navigation = useNavigation();
+
+  const mealItemPressHandler = () => {
+    navigation.navigate("MealDetails", { categoryId: id, title });
+  };
 
   return (
     <View style={styles.mealItem}>
-      <Pressable>
+      <Pressable onPress={mealItemPressHandler}>
         <View>
           <Image source={{ uri: imageUrl }} style={styles.image} />
           <Text style={styles.title}>{title}</Text>
