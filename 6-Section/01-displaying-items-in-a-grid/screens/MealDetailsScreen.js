@@ -1,11 +1,18 @@
-import { Image, Text, View, StyleSheet } from "react-native";
+import { Image, Text, View, StyleSheet, Button } from "react-native";
 import { useEffect, useLayoutEffect } from "react";
 import { MEALS } from "../data/dummy-data";
+import { IconButton } from "../components/IconButton";
 
 export const MealDetailsScreen = ({ route, navigation }) => {
   const { categoryId, title } = route.params;
+
+  const headerButtonHandler = () => {};
+
   useLayoutEffect(() => {
-    navigation.setOptions({ title });
+    navigation.setOptions({
+      title,
+      headerRight: () => <IconButton onPress={headerButtonHandler} />,
+    });
   }, [categoryId, navigation]);
 
   const selectedMeal = MEALS.find((m) => m.id == categoryId);
