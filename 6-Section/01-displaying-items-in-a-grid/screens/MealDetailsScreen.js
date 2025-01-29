@@ -2,11 +2,21 @@ import { Image, Text, View, StyleSheet, Button } from "react-native";
 import { useEffect, useLayoutEffect } from "react";
 import { MEALS } from "../data/dummy-data";
 import { IconButton } from "../components/IconButton";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavorites } from "../store/favorites";
 
 export const MealDetailsScreen = ({ route, navigation }) => {
+  const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+  const dispatch = useDispatch();
   const { categoryId, title } = route.params;
 
-  const headerButtonHandler = () => {};
+  const headerButtonHandler = () => {
+    dispatch(addFavorites({ id: 1 }));
+  };
+  
+  useEffect(() => {
+    console.log(favoriteMealIds);
+  }, [favoriteMealIds]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
